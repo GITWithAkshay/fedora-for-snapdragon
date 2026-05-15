@@ -27,6 +27,7 @@ Bootstrap scripts:
 
 - `scripts/setup-dev-env.ps1`
 - `scripts/setup-wsl-fedora.sh`
+- `scripts/build-book4edge-wsl.sh`
 
 Validation commands:
 
@@ -37,6 +38,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\setup-dev-env.ps1
 ```bash
 bash scripts/setup-wsl-fedora.sh
 bash scripts/validate.sh
+bash scripts/build-book4edge-wsl.sh
 ```
 
 ## Current support picture
@@ -181,7 +183,28 @@ From Fedora WSL:
 source .venv-fedora/bin/activate
 pre-commit run --all-files
 bash scripts/validate.sh
+bash scripts/build-book4edge-wsl.sh
 ```
+
+## Current build result
+
+The repository now contains a successful Book4 Edge kernel build from a
+patched mainline source tree in:
+
+- `build-output/Image.gz`
+- `build-output/x1e80100-samsung-galaxy-book4-edge-14.dtb`
+- `build-output/x1e84100-samsung-galaxy-book4-edge-16.dtb`
+
+The build is driven from Fedora WSL using:
+
+```bash
+bash scripts/build-book4edge-wsl.sh
+```
+
+That script uses a clean mainline clone on the WSL ext4 filesystem,
+applies the rebased Samsung Book4 Edge patch set, merges the local
+Snapdragon config fragment, builds `Image.gz` and `dtbs`, and copies the
+Samsung artifacts back into `build-output/`.
 
 ## Sources checked while preparing this kit
 

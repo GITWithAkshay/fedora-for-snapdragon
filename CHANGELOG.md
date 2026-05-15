@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.2 - 2026-05-15
+
+- Add a WSL-native Book4 Edge kernel build flow with a reproducible build
+  script and verified output artifacts.
+- Add a rebased Galaxy Book4 Edge v6 patch file and document the source
+  strategy used to build against current mainline.
+- Record and resolve kernel-source, patch-application, path-handling, and
+  DTS integration issues encountered during the first successful build.
+
 ## v0.1.1 - 2026-05-15
 
 - Add dual-environment bootstrap scripts for Windows and Fedora WSL.
