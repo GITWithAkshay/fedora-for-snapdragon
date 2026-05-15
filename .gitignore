@@ -1,4 +1,10 @@
 .venv/
+.venv-windows/
+.venv-fedora/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pnpm-store/
 node_modules/
 dist/
 build/

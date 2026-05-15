@@ -88,4 +88,3 @@ fi
 echo
 echo "Build complete."
 echo "Kernel image: $KERNEL_SRC/arch/arm64/boot/Image.gz"
-
