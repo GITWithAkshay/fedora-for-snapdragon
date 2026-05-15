@@ -1,0 +1,8 @@
+.git
+.venv
+.venv-windows
+.venv-fedora
+node_modules
+sources
+build-output
+docs

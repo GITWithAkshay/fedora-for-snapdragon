@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $dockerfile = Join-Path $repoRoot "docker/fedora-kernel-builder.Dockerfile"
-$imageName = "galaxy-book4-edge-fedora-builder:0.1.3"
+$imageName = "galaxy-book4-edge-fedora-builder:0.1.4"
 $sourceVolume = "galaxy-book4edge-kernel-src"
 $outVolume = "galaxy-book4edge-kernel-out"
 $desktopExe = "C:\Program Files\Docker\Docker\Docker Desktop.exe"

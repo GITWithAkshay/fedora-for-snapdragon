@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.4 - 2026-05-16
+
+- Add a Docker validation helper and a `.dockerignore` tuned for the
+  Book4 Edge container build workflow.
+- Remove the now-obsolete WSL-specific build entrypoints so Docker is the
+  only active Linux build path in the repository.
+- Retag the Docker builder image naming to match the current repository
+  version.
+
 ## v0.1.3 - 2026-05-16
 
 - Add a Docker-first Fedora kernel builder image and launcher for the

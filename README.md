@@ -27,12 +27,14 @@ Bootstrap scripts:
 - `scripts/setup-dev-env.ps1`
 - `scripts/run-book4edge-docker-build.ps1`
 - `scripts/build-book4edge-docker.sh`
+- `scripts/validate-docker.ps1`
 
 Validation commands:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\setup-dev-env.ps1
 powershell -ExecutionPolicy Bypass -File .\scripts\run-book4edge-docker-build.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\validate-docker.ps1
 ```
 
 ## Current support picture
@@ -89,6 +91,9 @@ That launcher:
 - merges `configs/galaxy-book4-edge.fragment`
 - builds `Image.gz` and `dtbs`
 - copies the Samsung artifacts back into `build-output/`
+
+The Docker build context is trimmed by `.dockerignore` so the container
+image does not ingest local virtual environments, docs, or build outputs.
 
 ## Installing on the laptop
 
@@ -153,6 +158,7 @@ From Docker:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\run-book4edge-docker-build.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\validate-docker.ps1
 ```
 
 ## Current build result
@@ -174,6 +180,10 @@ That launcher builds a Fedora container image, keeps the kernel source and
 output tree in Docker volumes, applies the rebased Samsung Book4 Edge patch
 set, merges the local Snapdragon config fragment, builds `Image.gz` and
 `dtbs`, and copies the Samsung artifacts back into `build-output/`.
+
+The validation helper confirms the Docker engine is reachable, the expected
+builder image exists locally, and the four expected Book4 Edge artifacts are
+present.
 
 ## Sources checked while preparing this kit
 

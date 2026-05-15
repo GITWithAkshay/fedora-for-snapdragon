@@ -327,3 +327,27 @@
 - Step name: Local Docker release tagged
 - Action: Verified the repository still has no configured Git remotes, avoided repeating the known no-remote push failure, and created the local v0.1.3 tag for the Docker-based Book4 Edge build release.
 - Result: The Docker release is complete as a validated local commit and tag and can be pushed immediately once an upstream remote is configured.
+
+## 2026-05-16T00:43:14+05:30
+
+- Step name: Docker workflow cleanup
+- Action: Added a focused .dockerignore file, introduced a Docker validation helper, updated the builder image versioning, and removed the obsolete WSL-specific build entrypoints so Docker remains the only active Linux build path.
+- Result: The repository now presents a cleaner Docker-first workflow with less build-context noise and less ambiguity about the supported environment.
+
+## 2026-05-16T00:43:45+05:30
+
+- Step name: Logged Docker validation exit-code bug
+- Action: Captured the PowerShell validation helper incorrectly reporting success after docker image inspect failed because native Docker exit codes were not being checked explicitly.
+- Result: The Docker validation regression is documented before fixing the script and rebuilding the expected image tag.
+
+## 2026-05-16T00:52:16+05:30
+
+- Step name: Docker workflow validation
+- Action: Rebuilt the Docker builder image under the trimmed build context, refreshed the Book4 Edge artifacts, reran the fixed Docker validation helper, and reran Markdown lint for the repository docs.
+- Result: The cleaned Docker-first workflow is validated end to end and ready for a local v0.1.4 release.
+
+## 2026-05-16T00:52:34+05:30
+
+- Step name: Local Docker cleanup release tagged
+- Action: Created the local v0.1.4 tag for the Docker-first cleanup release after removing legacy WSL entrypoints and validating the stricter Docker helper behavior.
+- Result: The repository now has a clean local v0.1.4 release that reflects the Docker-only active build path.
