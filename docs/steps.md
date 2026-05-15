@@ -279,3 +279,51 @@
 - Step name: Local release tagged
 - Action: Verified the release commit is clean, created the local Git tag v0.1.2, and confirmed that remote publication cannot proceed without a configured upstream.
 - Result: The Book4 Edge build release now exists as a validated local commit and tag, ready to push once a real remote is configured.
+
+## 2026-05-16T00:18:52+05:30
+
+- Step name: Logged Docker engine outage
+- Action: Captured the initial Docker failure where the installed Windows ARM client could not reach the desktop-linux engine pipe before attempting any Docker-based Linux environment setup.
+- Result: The first Docker blocker is documented and ready for remediation.
+
+## 2026-05-16T00:19:29+05:30
+
+- Step name: Logged Docker service permission issue
+- Action: Captured the direct Start-Service failure for com.docker.service from the non-elevated PowerShell session after confirming Docker Desktop itself could still be launched.
+- Result: The service-control permission blocker is documented before switching to a user-space Docker Desktop startup path.
+
+## 2026-05-16T00:22:51+05:30
+
+- Step name: Docker build flow scaffolded
+- Action: Added a Fedora Docker builder image, a container-native Book4 Edge kernel build script, a Windows PowerShell launcher for Docker Desktop, and updated the Book4 Edge patch plus release metadata for a Docker-first workflow.
+- Result: The repository now contains a reproducible Docker-based Linux build path ready for execution and validation.
+
+## 2026-05-16T00:31:20+05:30
+
+- Step name: Logged Docker merge_config failure
+- Action: Captured the first containerized build failure where merge_config.sh ended with 'No rule to make target alldefconfig' after being invoked outside the kernel source working directory.
+- Result: The Docker build-script regression is documented before correcting the script.
+
+## 2026-05-16T00:31:50+05:30
+
+- Step name: Docker build script corrected
+- Action: Updated the container build script to enter the kernel source tree before calling merge_config.sh and to apply the Book4 Edge patch with whitespace warnings suppressed so the stored patch can remain verbatim.
+- Result: The containerized build flow now matches the working assumptions of the kernel config merge helper and is ready for another full run.
+
+## 2026-05-16T00:39:54+05:30
+
+- Step name: Docker build completed
+- Action: Ran the new Fedora Docker launcher end to end, built the container image, refreshed the kernel source in Docker volumes, applied the rebased Book4 Edge patch, built Image.gz and dtbs, and verified the copied artifacts with the file utility.
+- Result: The Linux-in-Docker build path now produces validated Book4 Edge kernel artifacts from this Windows workspace without using WSL.
+
+## 2026-05-16T00:40:40+05:30
+
+- Step name: Docker documentation lint cleanup
+- Action: Wrapped the long Docker exact-error captures and command transcripts with targeted MD013 exemptions and reflowed the new merge_config regression note to keep the Docker troubleshooting docs markdownlint-compliant.
+- Result: The Docker-specific documentation is ready for another validation pass.
+
+## 2026-05-16T00:41:23+05:30
+
+- Step name: Local Docker release tagged
+- Action: Verified the repository still has no configured Git remotes, avoided repeating the known no-remote push failure, and created the local v0.1.3 tag for the Docker-based Book4 Edge build release.
+- Result: The Docker release is complete as a validated local commit and tag and can be pushed immediately once an upstream remote is configured.

@@ -1442,7 +1442,7 @@ index 000000000..2f9e76a82
 +	status = "okay";
 +};
 +
-+&usb_1_ss0_dwc3 {
++&usb_1_ss0 {
 +	dr_mode = "host";
 +};
 +
@@ -1473,7 +1473,7 @@ index 000000000..2f9e76a82
 +	status = "okay";
 +};
 +
-+&usb_1_ss1_dwc3 {
++&usb_1_ss1 {
 +	dr_mode = "host";
 +};
 +

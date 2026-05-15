@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.3 - 2026-05-16
+
+- Add a Docker-first Fedora kernel builder image and launcher for the
+  Galaxy Book4 Edge workflow.
+- Replace the WSL-specific build path with a reproducible Docker container
+  flow that stores kernel state in Docker volumes.
+- Fix the rebased Book4 Edge patch so the USB `dr_mode` nodes match current
+  upstream label names before containerized builds.
+
 ## v0.1.2 - 2026-05-15
 
 - Add a WSL-native Book4 Edge kernel build flow with a reproducible build
@@ -20,4 +29,5 @@
 
 ## v0.1.0 - 2026-05-15
 
-- Initialize the repository in English and add development environment scaffolding.
+- Initialize the repository in English and add development environment
+  scaffolding.
