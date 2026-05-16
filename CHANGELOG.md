@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.11 - 2026-05-17
+
+- Rebuild the `Eshank` pendrive as `FAT32` and reapply the patched Fedora
+  live-media tree plus Book4 Edge diagnostics layer.
+- Validate that the rebuilt USB now passes the repository's static
+  bootability checks, including the firmware-visible removable EFI path and
+  FAT32 filesystem requirement.
+
 ## v0.1.10 - 2026-05-17
 
 - Add a USB bootability verifier that checks firmware-visible prerequisites

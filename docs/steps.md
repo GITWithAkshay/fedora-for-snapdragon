@@ -507,3 +507,21 @@
 - Step name: exFAT boot-menu blocker verified
 - Action: Ran the new USB bootability verifier against the current Eshank pendrive and confirmed that the only failing static firmware-visibility check is the filesystem requirement, with exFAT failing where FAT32 is expected.
 - Result: We now have direct local evidence that explains why the patched pendrive does not appear in the laptop boot menu even though the EFI files and patched Fedora assets are present.
+
+## 2026-05-17T02:53:38+05:30
+
+- Step name: FAT32 rebuild attempt started
+- Action: Started the firmware-visibility fix by switching from the earlier non-elevated exFAT in-place workflow to a true FAT32 rebuild attempt on the Eshank pendrive so the laptop firmware can enumerate it as removable boot media.
+- Result: The next actions focus on changing the USB filesystem layout itself, which is now the primary blocker rather than the Fedora or kernel payload on the stick.
+
+## 2026-05-17T02:56:40+05:30
+
+- Step name: FAT32 USB rebuilt with patched Fedora media
+- Action: Successfully reformatted the Eshank pendrive from exFAT to FAT32, reapplied the patched Fedora live-media tree, and reinstalled the Book4 Edge boot logging layer onto the rebuilt USB.
+- Result: The pendrive now has the firmware-friendly FAT32 filesystem that was previously missing, along with the patched kernel, DTBs, diagnostics GRUB entries, and boot-log capture path.
+
+## 2026-05-17T02:57:47+05:30
+
+- Step name: FAT32 rebuild milestone versioned
+- Action: Updated the repository version and changelog to capture the successful FAT32 pendrive rebuild and the passing static USB bootability verification result.
+- Result: The repo now records the moment the Eshank pendrive moved from an exFAT firmware-invisible layout to a FAT32 layout that satisfies the current bootability checks.
