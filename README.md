@@ -43,6 +43,22 @@ Installer media download:
 powershell -ExecutionPolicy Bypass -File .\scripts\download-fedora-iso.ps1
 ```
 
+Installer media staging:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\prepare-patched-fedora-usb.ps1 `
+  -Force
+```
+
+Direct USB creation:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\write-patched-fedora-usb.ps1 `
+  -UsbDriveLetter D
+```
+
 ## Current support picture
 
 Mainline support for the Galaxy Book4 Edge is still evolving. The board
@@ -127,6 +143,84 @@ powershell -ExecutionPolicy Bypass -File .\scripts\download-fedora-iso.ps1 `
   -IsoUrl "https://..." `
   -OutputName "custom.iso" `
   -ExpectedSha256 "ABC123..."
+```
+
+## Preparing custom patched installer media
+
+On this machine, the most reliable path is to write the patched installer
+directly onto the target USB drive because the internal disk does not have
+enough free space for a full extracted Fedora live tree.
+
+Direct writer:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\write-patched-fedora-usb.ps1 `
+  -UsbDriveLetter D
+```
+
+What it does:
+
+- confirms the selected drive letter belongs to a removable USB disk
+- reformats that USB disk as GPT with an 8 GB FAT32 boot partition when the
+  shell is elevated
+- copies the Fedora Workstation `aarch64` live-media tree directly from the
+  mounted ISO onto the USB
+- expands the Book4 Edge kernel into `boot/aarch64/loader/linux-book4edge`
+- copies both Book4 Edge DTBs into `boot/dtb/qcom/`
+- updates Fedora live-media boot args to use the USB label
+- prepends patched GRUB entries for the 14-inch and 16-inch Book4 Edge
+  variants
+
+When the shell is elevated, the direct writer erases the selected USB disk
+before recreating it. Without elevation, it falls back to patching the
+existing removable filesystem in place.
+
+Optional local staging path, if another machine has enough disk space:
+
+Once the Fedora ISO and local Book4 Edge kernel artifacts are present, build
+the patched installer staging tree with:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\prepare-patched-fedora-usb.ps1 `
+  -Force
+```
+
+What it does:
+
+- mounts the downloaded Fedora Workstation `aarch64` ISO
+- copies the ISO contents into a local temp staging directory outside the
+  repository by default
+- expands `build-output/Image.gz` into an uncompressed installer kernel
+- copies both Book4 Edge DTBs into `boot/dtb/qcom/`
+- prepends custom GRUB entries for the 14-inch and 16-inch Book4 Edge
+  variants while leaving the stock Fedora entries in place
+
+The generated custom boot entries use:
+
+- `boot/aarch64/loader/linux-book4edge`
+- `boot/dtb/qcom/x1e80100-samsung-galaxy-book4-edge-14.dtb`
+- `boot/dtb/qcom/x1e84100-samsung-galaxy-book4-edge-16.dtb`
+
+To copy the staged tree onto a prepared USB volume:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\sync-patched-fedora-usb.ps1 `
+  -UsbDriveLetter D
+```
+
+That sync helper assumes the target USB is already partitioned and formatted
+for UEFI boot, and it mirrors the local staging tree onto the selected drive
+letter.
+
+To stage into a custom path instead of the default temp location:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\prepare-patched-fedora-usb.ps1 `
+  -StageDirectory "C:\temp\fedora-workstation-live-book4edge" `
+  -Force
 ```
 
 ## Installing on the laptop

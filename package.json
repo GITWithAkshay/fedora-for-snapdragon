@@ -1,13 +1,15 @@
 {
   "name": "galaxy-book4-edge-fedora-kernel-kit",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "private": true,
   "description": "Development environment and build helpers for Fedora kernel work on the Samsung Galaxy Book4 Edge.",
   "scripts": {
     "lint:md": "markdownlint \"**/*.md\"",
     "validate": "npm run lint:md",
     "validate:docker": "powershell -ExecutionPolicy Bypass -File .\\scripts\\validate-docker.ps1",
-    "download:fedora-iso": "powershell -ExecutionPolicy Bypass -File .\\scripts\\download-fedora-iso.ps1"
+    "download:fedora-iso": "powershell -ExecutionPolicy Bypass -File .\\scripts\\download-fedora-iso.ps1",
+    "prepare:fedora-usb": "powershell -ExecutionPolicy Bypass -File .\\scripts\\prepare-patched-fedora-usb.ps1",
+    "write:fedora-usb": "powershell -ExecutionPolicy Bypass -File .\\scripts\\write-patched-fedora-usb.ps1 -UsbDriveLetter D"
   },
   "devDependencies": {
     "markdownlint-cli": "^0.48.0"

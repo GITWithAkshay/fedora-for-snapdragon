@@ -1,5 +1,34 @@
 # Changelog
 
+## v0.1.8 - 2026-05-16
+
+- Harden the USB writer's native-command handling for PowerShell strict mode.
+- Add a non-elevated fallback path that patches the existing removable
+  filesystem in place when `diskpart` repartitioning is unavailable.
+- Document the strict-mode and `diskpart` permission blockers plus their
+  resolutions.
+
+## v0.1.7 - 2026-05-16
+
+- Add a direct patched Fedora USB writer that prepares the removable drive,
+  copies the Fedora `aarch64` live media from the downloaded ISO, injects
+  the Book4 Edge kernel and DTBs, and rewrites the live-media label args for
+  the FAT32 boot partition.
+- Keep the earlier local staging helpers available, but pivot the documented
+  main workflow toward direct-to-USB creation for low-disk-space hosts.
+- Record the repeated internal-disk staging failure and the chosen direct
+  USB alternative.
+
+## v0.1.6 - 2026-05-16
+
+- Add a staging workflow that mounts the official Fedora Workstation
+  `aarch64` ISO, copies it into a local USB staging tree, injects the
+  Book4 Edge kernel and DTBs, and prepends patched GRUB menu entries.
+- Add a USB sync helper that copies the staged patched Fedora media onto a
+  prepared removable drive without rebuilding the staging tree each time.
+- Document the new custom installer-media flow built on top of the
+  downloaded Fedora ISO.
+
 ## v0.1.5 - 2026-05-16
 
 - Add an `aria2`-based Fedora ISO downloader with visible progress output,

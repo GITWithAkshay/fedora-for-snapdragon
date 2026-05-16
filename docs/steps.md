@@ -405,3 +405,63 @@
 - Step name: aria2 download workflow validated
 - Action: Fixed the downloader so an existing ISO is verified before any write attempt, cleaned the new problem and solution docs to satisfy markdownlint, reran the aria2-based Fedora ISO download script, and reran Markdown lint.
 - Result: The repository now has a validated progress-enabled Fedora ISO download workflow that reuses the existing ISO safely and passes documentation linting cleanly.
+
+## 2026-05-16T23:18:06+05:30
+
+- Step name: Installer media base verified
+- Action: Confirmed the downloaded Fedora Workstation aarch64 ISO is present under downloads and the Book4 Edge kernel artifacts are present under build-output before starting the custom USB workflow implementation.
+- Result: The repository has the exact base inputs needed to build a patched Fedora installer staging tree from the official ISO plus the local Samsung kernel artifacts.
+
+## 2026-05-16T23:20:54+05:30
+
+- Step name: Patched USB staging workflow added
+- Action: Added PowerShell helpers to build a local patched Fedora installer staging tree from the downloaded aarch64 ISO, inject the Book4 Edge kernel and DTBs, prepend custom GRUB entries, and mirror that staging tree onto a prepared USB drive.
+- Result: The repository now has a concrete custom installer-media workflow built on top of the downloaded Fedora ISO instead of only documenting the idea.
+
+## 2026-05-16T23:23:10+05:30
+
+- Step name: Logged staging and README validation failures
+- Action: Captured the failed local USB staging run caused by insufficient space in the OneDrive-backed repository path and recorded the new README markdownlint line-length failures before changing the workflow.
+- Result: Both blockers are now documented under docs/problems so the staging path and README formatting can be corrected with the original failure evidence preserved.
+
+## 2026-05-16T23:23:54+05:30
+
+- Step name: Staging path and README fixes applied
+- Action: Moved the default patched USB staging directory out of the OneDrive-backed repository into the local temp area, documented the staging-path and README-format alternatives, and wrapped the README USB workflow lines to stay within lint limits.
+- Result: The custom installer workflow now avoids the repository storage bottleneck by default and the README changes are aligned with the repository Markdown policy.
+
+## 2026-05-16T23:26:11+05:30
+
+- Step name: Logged second-pass staging and doc failures
+- Action: Recorded the second staging failure after moving the extracted Fedora live tree into the local temp directory and captured the remaining USB workflow markdownlint failures before changing strategy.
+- Result: The repeated space error is now documented as a signal to pivot away from internal-drive staging, and the remaining doc-format issues are preserved for a targeted cleanup pass.
+
+## 2026-05-16T23:31:56+05:30
+
+- Step name: Logged direct writer strict-mode failure
+- Action: Captured the first direct USB writer run failure after PowerShell strict mode rejected an unset LASTEXITCODE reference before any USB changes were made.
+- Result: The direct writer bug is documented under docs/problems and the target USB remains untouched for a safe retry after the script fix.
+
+## 2026-05-16T23:35:24+05:30
+
+- Step name: Logged diskpart permission blocker
+- Action: Recorded the direct USB writer failure when diskpart could not complete the USB reformat step in the current shell and documented the need for a non-elevated fallback path.
+- Result: The new direct-writer blocker is preserved under docs/problems and the next fix can safely pivot to an in-place removable-drive workflow instead of retrying the same privileged operation.
+
+## 2026-05-16T23:38:06+05:30
+
+- Step name: Logged USB GRUB patch access issue
+- Action: Captured the non-elevated direct USB writer failure after the Fedora live-media tree was mirrored onto D but the script could not rewrite grub.cfg because access to the copied file was denied.
+- Result: The next direct-writer fix can target copied media attributes and file overwrite behavior with the exact USB-side failure documented first.
+
+## 2026-05-16T23:39:10+05:30
+
+- Step name: Logged GRUB template interpolation bug
+- Action: Captured the direct USB writer failure after the in-place copy path reached custom GRUB entry generation and PowerShell tried to expand the literal GRUB root variable inside the here-string.
+- Result: The remaining direct-writer bug is documented under docs/problems and can now be fixed by treating GRUB variables as literal text.
+
+## 2026-05-16T23:41:10+05:30
+
+- Step name: Direct patched USB created and verified
+- Action: Completed the non-elevated direct USB workflow on D by mirroring the Fedora live-media tree, injecting the Book4 Edge kernel and DTBs, updating GRUB live-media label arguments to Eshank, and verifying the patched menu entries and boot assets on the USB.
+- Result: The repository now has a validated direct patched Fedora USB creation path, and the current Eshank drive contains the patched installer media tree with Book4 Edge GRUB entries even though the shell could not repartition it into FAT32.
