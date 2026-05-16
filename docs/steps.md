@@ -537,3 +537,33 @@
 - Step name: Empty USB log state documented
 - Action: Recorded the expected collector warning for an empty book4edge-logs directory before any successful laptop-side boot attempt has produced a timestamped log bundle.
 - Result: The repo now documents that an empty log directory is a waiting state rather than a bug in the new post-boot log collector.
+
+## 2026-05-17T03:20:31+05:30
+
+- Step name: MBR active-flag investigation
+- Action: Confirmed that the rebuilt FAT32 pendrive is still an MBR removable disk with a FAT32 XINT13 partition whose IsActive flag is currently false, making the active-partition bit the next low-risk firmware-visibility knob to test.
+- Result: The next change can focus on partition metadata rather than rewriting the Fedora payload because the pendrive now has the right files and filesystem but may still be missing a boot-discoverability hint.
+
+## 2026-05-17T03:21:02+05:30
+
+- Step name: Logged active-flag access denial
+- Action: Captured the failed attempt to mark the rebuilt FAT32 USB partition active after Windows rejected Set-Partition with access denied and left the pendrive metadata unchanged.
+- Result: The remaining firmware-visibility work is now narrowed to elevated partition metadata changes or an alternate USB creation tool that can write the final bootable layout in one pass.
+
+## 2026-05-17T03:24:35+05:30
+
+- Step name: Verifier tightened for MBR metadata
+- Action: Updated the USB bootability verifier so an MBR pendrive must also have an active boot partition to pass, and documented the failed elevated metadata attempt as the current Windows-side blocker.
+- Result: The tooling now reflects the remaining firmware-discoverability gap more honestly and points directly at the still-missing active-partition metadata on the rebuilt FAT32 stick.
+
+## 2026-05-17T03:25:22+05:30
+
+- Step name: Active-flag blocker versioned
+- Action: Updated the repository version and changelog after tightening the USB bootability verifier to fail on an MBR pendrive whose boot partition is still not marked active.
+- Result: The repo now records that the remaining boot-menu blocker is the missing active-partition metadata rather than the Fedora payload, filesystem, or EFI files.
+
+## 2026-05-17T03:25:52+05:30
+
+- Step name: Set-Partition denial resolved in docs and verifier
+- Action: Added the matching solution note for the non-elevated Set-Partition access denial and tied that blocker into the stricter USB bootability verifier instead of leaving it as an isolated error.
+- Result: The documentation trail is now complete for the active-flag blocker and the repo tooling reports that metadata gap directly.

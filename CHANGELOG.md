@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.13 - 2026-05-17
+
+- Tighten the USB bootability verifier so `MBR` removable media must also
+  have an active boot partition to pass the static firmware-visibility
+  checks.
+- Document the remaining blocker after the FAT32 rebuild: the pendrive still
+  needs the elevated active-partition metadata change that Windows refused to
+  apply from the current shell.
+
 ## v0.1.12 - 2026-05-17
 
 - Add a USB boot-log collection helper that inspects `book4edge-logs/`,

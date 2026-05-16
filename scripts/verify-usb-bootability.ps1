@@ -44,6 +44,7 @@ function Get-UsbDiskContext {
     return @{
         LogicalDisk = $logicalDisk
         Partition = $partition
+        PartitionInfo = (Get-Partition -DiskNumber $partition.DiskIndex -PartitionNumber ($partition.Index + 1))
         Disk = $disk
         DriveRoot = "$($DriveLetter.ToUpperInvariant()):"
     }
@@ -58,6 +59,7 @@ function Test-PathItem {
 $context = Get-UsbDiskContext -DriveLetter $UsbDriveLetter
 $logicalDisk = $context.LogicalDisk
 $partition = $context.Partition
+$partitionInfo = $context.PartitionInfo
 $disk = $context.Disk
 $driveRoot = $context.DriveRoot
 
@@ -103,6 +105,15 @@ $checks = @(
     }
 )
 
+if ((Get-Disk -Number $disk.Index).PartitionStyle -eq "MBR") {
+    $checks += [pscustomobject]@{
+        Check = "MBR active flag"
+        Expected = "IsActive = True for the boot partition"
+        Actual = $partitionInfo.IsActive
+        Passed = [bool]$partitionInfo.IsActive
+    }
+}
+
 $checks | Format-Table Check, Expected, Actual, Passed -AutoSize
 
 $failed = $checks | Where-Object { -not $_.Passed }
@@ -119,6 +130,9 @@ if ($failed) {
     Write-Warning "This USB does not currently meet all common UEFI removable-boot checks."
     if ($logicalDisk.FileSystem -ne "FAT32") {
         Write-Warning "The strongest current blocker is the filesystem: many UEFI boot menus will not list an exFAT removable drive."
+    }
+    elseif ((Get-Disk -Number $disk.Index).PartitionStyle -eq "MBR" -and -not $partitionInfo.IsActive) {
+        Write-Warning "The filesystem is now correct, but the MBR boot partition is not marked active."
     }
     exit 1
 }
