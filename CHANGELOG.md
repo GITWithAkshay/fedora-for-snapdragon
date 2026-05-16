@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.9 - 2026-05-16
+
+- Add a USB boot-logging installer that patches the live-media initrd with a
+  Book4 Edge pre-pivot hook and installs a one-shot log collector into the
+  live system.
+- Add diagnostics GRUB entries with verbose kernel and dracut logging for
+  both Book4 Edge DTB variants.
+- Create an on-USB `book4edge-logs/` destination so first boot attempts can
+  leave artifacts for later troubleshooting.
+
 ## v0.1.8 - 2026-05-16
 
 - Harden the USB writer's native-command handling for PowerShell strict mode.

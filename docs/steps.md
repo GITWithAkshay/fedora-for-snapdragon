@@ -465,3 +465,33 @@
 - Step name: Direct patched USB created and verified
 - Action: Completed the non-elevated direct USB workflow on D by mirroring the Fedora live-media tree, injecting the Book4 Edge kernel and DTBs, updating GRUB live-media label arguments to Eshank, and verifying the patched menu entries and boot assets on the USB.
 - Result: The repository now has a validated direct patched Fedora USB creation path, and the current Eshank drive contains the patched installer media tree with Book4 Edge GRUB entries even though the shell could not repartition it into FAT32.
+
+## 2026-05-16T23:44:17+05:30
+
+- Step name: USB boot layout inspected
+- Action: Verified the current patched USB layout on D including EFI files, the Fedora live squashfs image, the injected linux-book4edge kernel, the Samsung DTBs, and the rewritten GRUB entries that point to root=live:LABEL=Eshank.
+- Result: Static inspection confirms the pendrive contains a coherent patched Fedora live-media tree, even though actual boot still requires hardware verification on the laptop.
+
+## 2026-05-16T23:56:00+05:30
+
+- Step name: USB boot logging installer added
+- Action: Added a PowerShell installer that patches the live-media initrd with a dracut pre-pivot hook, creates diagnostics GRUB entries, and prepares a book4edge-logs destination on the USB for first-boot evidence collection.
+- Result: The repository now has an automated diagnostics layer for the patched Fedora pendrive instead of relying only on manual post-boot commands.
+
+## 2026-05-16T23:59:48+05:30
+
+- Step name: Logged initrd extraction filesystem issue
+- Action: Captured the boot-logging installer failure after Windows tar tried to fully extract the Fedora initrd onto the USB-visible filesystem and hit invalid-argument errors on archive entries the target filesystem could not represent.
+- Result: The diagnostics installer blocker is documented under docs/problems and the fix can pivot to an appended initrd overlay instead of a full extraction workflow.
+
+## 2026-05-17T00:01:36+05:30
+
+- Step name: Logged initrd addon write failure
+- Action: Captured the boot-logging installer failure after the appended-addon strategy built the tiny cpio overlay but could not rewrite the temporary patched initrd file on D due to an access-denied file state.
+- Result: The latest installer blocker is documented under docs/problems and the next fix can target the temporary file attributes directly.
+
+## 2026-05-17T00:24:08+05:30
+
+- Step name: USB logging statically verified
+- Action: Verified that the patched USB now contains diagnostics GRUB entries, the initrd backup, the on-USB log destination directory, and an initrd with two zstd stream headers versus one in the backup, which matches the appended logging overlay design.
+- Result: Static verification now shows the diagnostics layer is installed on the pendrive, while actual runtime proof will come from the first boot writing artifacts into D:\book4edge-logs\.

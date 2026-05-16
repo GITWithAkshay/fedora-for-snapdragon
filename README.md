@@ -59,6 +59,14 @@ powershell -ExecutionPolicy Bypass `
   -UsbDriveLetter D
 ```
 
+Boot logging installer:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\install-usb-boot-logging.ps1 `
+  -UsbDriveLetter D
+```
+
 ## Current support picture
 
 Mainline support for the Galaxy Book4 Edge is still evolving. The board
@@ -175,6 +183,34 @@ What it does:
 When the shell is elevated, the direct writer erases the selected USB disk
 before recreating it. Without elevation, it falls back to patching the
 existing removable filesystem in place.
+
+## Adding first-boot diagnostics
+
+After the patched Fedora tree is on the USB, install the diagnostics layer:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\install-usb-boot-logging.ps1 `
+  -UsbDriveLetter D
+```
+
+What it does:
+
+- backs up `boot/aarch64/loader/initrd` to `initrd.book4edge-backup`
+- patches the initrd with a dracut pre-pivot hook
+- drops a one-shot systemd log collector into the live boot
+- creates `book4edge-logs/` on the USB as the log destination
+- adds `Book4 Edge diagnostics` GRUB entries with verbose kernel logging
+
+On a successful live boot, logs should be written under:
+
+- `D:\book4edge-logs\<timestamp>\`
+
+The collector is intended to save:
+
+- the initrd-phase journal and dmesg captured before switch-root
+- the full `journalctl -b` output after the live system comes up
+- `dmesg`, failed units, `lsblk -f`, `lsmod`, `uname -a`, and `/proc/cmdline`
 
 Optional local staging path, if another machine has enough disk space:
 
