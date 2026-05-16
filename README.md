@@ -67,6 +67,14 @@ powershell -ExecutionPolicy Bypass `
   -UsbDriveLetter D
 ```
 
+USB bootability verifier:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\verify-usb-bootability.ps1 `
+  -UsbDriveLetter D
+```
+
 ## Current support picture
 
 Mainline support for the Galaxy Book4 Edge is still evolving. The board
@@ -211,6 +219,27 @@ The collector is intended to save:
 - the initrd-phase journal and dmesg captured before switch-root
 - the full `journalctl -b` output after the live system comes up
 - `dmesg`, failed units, `lsblk -f`, `lsmod`, `uname -a`, and `/proc/cmdline`
+
+## Verifying whether firmware should see the pendrive
+
+To check whether the current USB layout matches common UEFI removable-boot
+expectations, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\verify-usb-bootability.ps1 `
+  -UsbDriveLetter D
+```
+
+What it checks:
+
+- the drive letter maps to a removable USB disk
+- the filesystem is `FAT32`
+- the removable EFI path `EFI\BOOT\BOOTAA64.EFI` exists
+- the patched `linux-book4edge` kernel and Book4 Edge GRUB entries exist
+
+If the verifier reports `exFAT`, that explains a pendrive that does not
+appear in the firmware boot menu even though the Fedora files are present.
 
 Optional local staging path, if another machine has enough disk space:
 

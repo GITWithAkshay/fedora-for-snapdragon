@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.10 - 2026-05-17
+
+- Add a USB bootability verifier that checks firmware-visible prerequisites
+  such as removable-disk mapping, FAT32 filesystem use, and the presence of
+  the expected `EFI/BOOT/BOOTAA64.EFI` path.
+- Document the current boot-menu blocker: the pendrive contains the patched
+  Fedora media tree, but it is still an `exFAT` single-partition layout that
+  many UEFI boot menus will not enumerate.
+
 ## v0.1.9 - 2026-05-16
 
 - Add a USB boot-logging installer that patches the live-media initrd with a

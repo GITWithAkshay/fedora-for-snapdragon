@@ -495,3 +495,15 @@
 - Step name: USB logging statically verified
 - Action: Verified that the patched USB now contains diagnostics GRUB entries, the initrd backup, the on-USB log destination directory, and an initrd with two zstd stream headers versus one in the backup, which matches the appended logging overlay design.
 - Result: Static verification now shows the diagnostics layer is installed on the pendrive, while actual runtime proof will come from the first boot writing artifacts into D:\book4edge-logs\.
+
+## 2026-05-17T02:40:10+05:30
+
+- Step name: Boot-menu visibility verifier added
+- Action: Added a PowerShell verifier that checks whether the current USB matches common UEFI removable-boot expectations and documented the new boot-menu symptom as an exFAT-layout blocker.
+- Result: The repository now distinguishes between a patched Fedora file tree and a pendrive layout that firmware is actually likely to enumerate in the boot menu.
+
+## 2026-05-17T02:40:38+05:30
+
+- Step name: exFAT boot-menu blocker verified
+- Action: Ran the new USB bootability verifier against the current Eshank pendrive and confirmed that the only failing static firmware-visibility check is the filesystem requirement, with exFAT failing where FAT32 is expected.
+- Result: We now have direct local evidence that explains why the patched pendrive does not appear in the laptop boot menu even though the EFI files and patched Fedora assets are present.
