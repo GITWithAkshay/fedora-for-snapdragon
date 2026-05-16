@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.12 - 2026-05-17
+
+- Add a USB boot-log collection helper that inspects `book4edge-logs/`,
+  selects the newest boot-attempt folder, and summarizes the captured logs
+  for faster troubleshooting after each pendrive boot.
+- Document the post-boot evidence workflow so the first successful or failed
+  live-session attempt can be turned into a focused patch cycle quickly.
+
 ## v0.1.11 - 2026-05-17
 
 - Rebuild the `Eshank` pendrive as `FAT32` and reapply the patched Fedora

@@ -525,3 +525,15 @@
 - Step name: FAT32 rebuild milestone versioned
 - Action: Updated the repository version and changelog to capture the successful FAT32 pendrive rebuild and the passing static USB bootability verification result.
 - Result: The repo now records the moment the Eshank pendrive moved from an exFAT firmware-invisible layout to a FAT32 layout that satisfies the current bootability checks.
+
+## 2026-05-17T03:09:13+05:30
+
+- Step name: USB log collector added
+- Action: Added a PowerShell helper that scans the pendrive boot4edge-logs directory, finds the newest boot-attempt folder, verifies the expected log files, and prints a short summary for rapid post-boot triage.
+- Result: The repo now has an immediate post-boot analysis path so the first pendrive boot attempt can be translated into actionable debugging evidence without manual file hunting.
+
+## 2026-05-17T03:09:41+05:30
+
+- Step name: Empty USB log state documented
+- Action: Recorded the expected collector warning for an empty book4edge-logs directory before any successful laptop-side boot attempt has produced a timestamped log bundle.
+- Result: The repo now documents that an empty log directory is a waiting state rather than a bug in the new post-boot log collector.

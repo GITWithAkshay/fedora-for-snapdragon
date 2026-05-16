@@ -75,6 +75,14 @@ powershell -ExecutionPolicy Bypass `
   -UsbDriveLetter D
 ```
 
+USB log collector:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\collect-usb-boot-logs.ps1 `
+  -UsbDriveLetter D
+```
+
 ## Current support picture
 
 Mainline support for the Galaxy Book4 Edge is still evolving. The board
@@ -219,6 +227,21 @@ The collector is intended to save:
 - the initrd-phase journal and dmesg captured before switch-root
 - the full `journalctl -b` output after the live system comes up
 - `dmesg`, failed units, `lsblk -f`, `lsmod`, `uname -a`, and `/proc/cmdline`
+
+After each boot attempt, collect and summarize the newest log bundle with:
+
+```powershell
+powershell -ExecutionPolicy Bypass `
+  -File .\scripts\collect-usb-boot-logs.ps1 `
+  -UsbDriveLetter D
+```
+
+That helper reports:
+
+- whether any boot-attempt folders were written
+- the newest log directory path
+- which expected log files are present
+- a short summary of `failed-units.txt`, `proc-cmdline.txt`, and `uname-a.txt`
 
 ## Verifying whether firmware should see the pendrive
 
