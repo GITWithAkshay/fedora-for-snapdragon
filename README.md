@@ -37,6 +37,12 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run-book4edge-docker-build.ps
 powershell -ExecutionPolicy Bypass -File .\scripts\validate-docker.ps1
 ```
 
+Installer media download:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\download-fedora-iso.ps1
+```
+
 ## Current support picture
 
 Mainline support for the Galaxy Book4 Edge is still evolving. The board
@@ -94,6 +100,34 @@ That launcher:
 
 The Docker build context is trimmed by `.dockerignore` so the container
 image does not ingest local virtual environments, docs, or build outputs.
+
+## Downloading Fedora installer media
+
+The repository now includes a Windows downloader that uses `aria2` for a
+visible progress bar plus retry and resume behavior that worked better here
+than either `Invoke-WebRequest` or `Start-BitsTransfer`.
+
+Run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\download-fedora-iso.ps1
+```
+
+What it does:
+
+- locates `aria2c` from the current PATH or the local `winget` package path
+- downloads the Fedora Workstation `aarch64` live ISO into `downloads/`
+- verifies the SHA256 against the expected Fedora release hash
+- keeps partial downloads resumable with `aria2`
+
+You can override the defaults with:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\download-fedora-iso.ps1 `
+  -IsoUrl "https://..." `
+  -OutputName "custom.iso" `
+  -ExpectedSha256 "ABC123..."
+```
 
 ## Installing on the laptop
 

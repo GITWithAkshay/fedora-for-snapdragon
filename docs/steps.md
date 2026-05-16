@@ -351,3 +351,57 @@
 - Step name: Local Docker cleanup release tagged
 - Action: Created the local v0.1.4 tag for the Docker-first cleanup release after removing legacy WSL entrypoints and validating the stricter Docker helper behavior.
 - Result: The repository now has a clean local v0.1.4 release that reflects the Docker-only active build path.
+
+## 2026-05-16T21:46:14+05:30
+
+- Step name: GitHub remote published
+- Action: Added the provided GitHub repository as origin, pushed the current master branch, and pushed all local release tags through v0.1.4.
+- Result: The project is now published to GitHub and future installer-workflow changes can be managed and shared through the remote repository.
+
+## 2026-05-16T22:16:23+05:30
+
+- Step name: Logged Fedora ISO download reset
+- Action: Captured the failed Invoke-WebRequest attempt for the Fedora Workstation 44 aarch64 ISO after the remote host reset the connection during the large transfer.
+- Result: The first installer-media download blocker is documented before switching to a more resilient fetch method.
+
+## 2026-05-16T22:35:43+05:30
+
+- Step name: aria2 installed
+- Action: Installed aria2 on Windows through winget so large Fedora media downloads can use a visible progress bar plus multi-connection retry behavior.
+- Result: The workspace now has an ISO download tool better suited to long transfers than Invoke-WebRequest or BITS.
+
+## 2026-05-16T22:36:31+05:30
+
+- Step name: Logged aria2 PATH issue
+- Action: Captured the first aria2 invocation failure after installation because the current PowerShell session had not yet picked up the new aria2c PATH entry.
+- Result: The aria2 bootstrap issue is documented before switching to an explicit executable path.
+
+## 2026-05-16T22:59:10+05:30
+
+- Step name: Download workflow inspection
+- Action: Reviewed the repository state, changelog version, existing scripts, and the three new Fedora ISO download problem reports to scope the aria2 downloader work.
+- Result: The next change set is narrowed to a scripted aria2 download path with progress output, solution records for the failed methods, and updated documentation.
+
+## 2026-05-16T22:59:12+05:30
+
+- Step name: Download workflow inspection
+- Action: Reviewed the current repository state, existing documentation, changelog version, and the three new Fedora ISO download problem reports to prepare the aria2-based downloader changes.
+- Result: The remaining work is now scoped to a scripted aria2 download path, solution records for the failed methods, and documentation updates around the new progress-enabled download flow.
+
+## 2026-05-16T23:00:24+05:30
+
+- Step name: aria2 downloader scripted
+- Action: Added a reusable PowerShell downloader that finds aria2c automatically, downloads the Fedora Workstation aarch64 ISO with a visible progress bar, verifies SHA256, and documented the three resolved download failures plus the new workflow in the README and changelog.
+- Result: The repository now contains a repeatable aria2-based installer-media download path instead of relying on fragile manual commands or default PowerShell transfer methods.
+
+## 2026-05-16T23:02:52+05:30
+
+- Step name: Logged downloader verification failures
+- Action: Documented the new aria2 file-lock verification failure and the markdownlint line-length failures triggered by the download workflow documentation before attempting any fixes.
+- Result: Both validation blockers now have exact error records under docs/problems and can be fixed without losing the original failure evidence.
+
+## 2026-05-16T23:12:40+05:30
+
+- Step name: aria2 download workflow validated
+- Action: Fixed the downloader so an existing ISO is verified before any write attempt, cleaned the new problem and solution docs to satisfy markdownlint, reran the aria2-based Fedora ISO download script, and reran Markdown lint.
+- Result: The repository now has a validated progress-enabled Fedora ISO download workflow that reuses the existing ISO safely and passes documentation linting cleanly.

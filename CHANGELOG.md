@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.5 - 2026-05-16
+
+- Add an `aria2`-based Fedora ISO downloader with visible progress output,
+  checksum verification, and automatic executable discovery for the current
+  Windows session.
+- Ignore downloaded ISO and USB staging artifacts in git so installer-media
+  work does not pollute commits.
+- Record the failed `Invoke-WebRequest`, `Start-BitsTransfer`, and initial
+  `aria2c` PATH attempts plus the working `aria2` recovery path.
+
 ## v0.1.4 - 2026-05-16
 
 - Add a Docker validation helper and a `.dockerignore` tuned for the
